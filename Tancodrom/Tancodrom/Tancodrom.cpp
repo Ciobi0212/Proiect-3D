@@ -81,10 +81,15 @@ public:
 
     void Reset(const int width, const int height)
     {
+        Set(width, height, startPosition);
     }
 
     void Reshape(int windowWidth, int windowHeight)
     {
+        width = windowWidth;
+        height = windowHeight;
+
+        glViewport(0, 0, windowWidth, windowHeight);
     }
 
     const glm::vec3 GetPosition() const
