@@ -167,6 +167,13 @@ public:
 
     void ProcessMouseScroll(float yOffset)
     { 
+        if (FoVy >= 1.0f && FoVy <= 90.0f) {
+            FoVy -= yOffset;
+        }
+        if (FoVy <= 1.0f)
+            FoVy = 1.0f;
+        if (FoVy >= 90.0f)
+            FoVy = 90.0f;
     }
 
 private:
