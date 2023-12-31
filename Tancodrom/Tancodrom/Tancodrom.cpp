@@ -145,6 +145,24 @@ public:
 
     void MouseControl(float xPos, float yPos)
     {
+        if (bFirstMouseMove) {
+            lastX = xPos;
+            lastY = yPos;
+            bFirstMouseMove = false;
+        }
+
+        float xChange = xPos - lastX;
+        float yChange = lastY - yPos;
+        lastX = xPos;
+        lastY = yPos;
+
+        if (fabs(xChange) <= 1e-6 && fabs(yChange) <= 1e-6) {
+            return;
+        }
+        xChange *= mouseSensitivity;
+        yChange *= mouseSensitivity;
+
+        ProcessMouseMovement(xChange, yChange);
     }
 
     void ProcessMouseScroll(float yOffset)
@@ -154,6 +172,18 @@ public:
 private:
     void ProcessMouseMovement(float xOffset, float yOffset, bool constrainPitch = true)
     {
+        yaw += xOffset;
+        pitch += yOffset;
+
+        if (constrainPitch) {
+            if (pitch > 89.0f)
+                pitch = 89.0f;
+            if (pitch < -89.0f)
+                pitch = -89.0f;
+        }
+
+        // Se modifica vectorii camerei pe baza unghiurilor Euler
+        UpdateCameraVectors();
     }
 
     void UpdateCameraVectors()
