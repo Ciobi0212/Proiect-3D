@@ -94,14 +94,28 @@ public:
 
     const glm::vec3 GetPosition() const
     {
+        return position;
     }
 
     const glm::mat4 GetViewMatrix() const
     {
+        return glm::lookAt(position, position + forward, up);
     }
 
     const glm::mat4 GetProjectionMatrix() const
     {
+        glm::mat4 Proj = glm::mat4(1);
+        if (isPerspective) {
+            float aspectRatio = ((float)(width)) / height;
+            Proj = glm::perspective(glm::radians(FoVy), aspectRatio, zNear, zFar);
+        }
+        else {
+            float scaleFactor = 2000.f;
+            Proj = glm::ortho<float>(
+                -width / scaleFactor, width / scaleFactor,
+                -height / scaleFactor, height / scaleFactor, -zFar, zFar);
+        }
+        return Proj;
     }
 
     void ProcessKeyboard(ECameraMovementType direction, float deltaTime)
