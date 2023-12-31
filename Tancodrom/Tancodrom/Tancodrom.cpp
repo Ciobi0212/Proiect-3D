@@ -120,6 +120,27 @@ public:
 
     void ProcessKeyboard(ECameraMovementType direction, float deltaTime)
     {
+        float velocity = (float)(cameraSpeedFactor * deltaTime);
+        switch (direction) {
+        case ECameraMovementType::FORWARD:
+            position += forward * velocity;
+            break;
+        case ECameraMovementType::BACKWARD:
+            position -= forward * velocity;
+            break;
+        case ECameraMovementType::LEFT:
+            position -= right * velocity;
+            break;
+        case ECameraMovementType::RIGHT:
+            position += right * velocity;
+            break;
+        case ECameraMovementType::UP:
+            position += up * velocity;
+            break;
+        case ECameraMovementType::DOWN:
+            position -= up * velocity;
+            break;
+        }
     }
 
     void MouseControl(float xPos, float yPos)
