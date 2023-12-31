@@ -1,12 +1,13 @@
 // Simulare tancodrom.cpp 
 //
 
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h> 
 
 #include <GL/glew.h>
 
+#define GLM_FORCE_CTOR_INIT 
 #include <GLM.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
@@ -16,6 +17,9 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 #pragma comment (lib, "glfw3dll.lib")
 #pragma comment (lib, "glew32.lib")
@@ -46,12 +50,87 @@ private:
     const float PITCH = 0.0f;
     const float FOV = 45.0f;
     glm::vec3 startPosition;
+public:
+    Camera(const int width, const int height, const glm::vec3& position)
+    {
+        startPosition = position;
+        Set(width, height, position);
+    }
 
+    void Set(const int width, const int height, const glm::vec3& position)
+    {
+        this->isPerspective = true;
+        this->yaw = YAW;
+        this->pitch = PITCH;
+
+        this->FoVy = FOV;
+        this->width = width;
+        this->height = height;
+        this->zNear = zNEAR;
+        this->zFar = zFAR;
+
+        this->worldUp = glm::vec3(0, 1, 0);
+        this->position = position;
+
+        lastX = width / 2.0f;
+        lastY = height / 2.0f;
+        bFirstMouseMove = true;
+
+        UpdateCameraVectors();
+    }
+
+    void Reset(const int width, const int height)
+    {
+    }
+
+    void Reshape(int windowWidth, int windowHeight)
+    {
+    }
+
+    const glm::vec3 GetPosition() const
+    {
+    }
+
+    const glm::mat4 GetViewMatrix() const
+    {
+    }
+
+    const glm::mat4 GetProjectionMatrix() const
+    {
+    }
+
+    void ProcessKeyboard(ECameraMovementType direction, float deltaTime)
+    {
+    }
+
+    void MouseControl(float xPos, float yPos)
+    {
+    }
+
+    void ProcessMouseScroll(float yOffset)
+    { 
+    }
+
+private:
+    void ProcessMouseMovement(float xOffset, float yOffset, bool constrainPitch = true)
+    {
+    }
+
+    void UpdateCameraVectors()
+    {
+        
+        this->forward.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+        this->forward.y = sin(glm::radians(pitch));
+        this->forward.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+        this->forward = glm::normalize(this->forward);
+       
+        right = glm::normalize(glm::cross(forward, worldUp));  
+        up = glm::normalize(glm::cross(right, forward));
+    }
 protected:
     const float cameraSpeedFactor = 2.5f;
     const float mouseSensitivity = 0.1f;
 
-    // Perspective properties
     float zNear;
     float zFar;
     float FoVy;
@@ -65,7 +144,6 @@ protected:
     glm::vec3 up;
     glm::vec3 worldUp;
 
-    // Euler Angles
     float yaw;
     float pitch;
 
