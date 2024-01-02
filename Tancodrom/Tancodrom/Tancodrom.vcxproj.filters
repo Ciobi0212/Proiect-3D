@@ -22,5 +22,6 @@
   <ItemGroup>
     <None Include="ShadowMapping.fs" />
     <None Include="ShadowMapping.vs" />
+    <None Include="ShadowMappingDepth.vs" />
   </ItemGroup>
 </Project>
