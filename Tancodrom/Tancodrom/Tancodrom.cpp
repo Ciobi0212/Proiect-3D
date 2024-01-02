@@ -228,6 +228,36 @@ protected:
     float lastX = 0.f, lastY = 0.f;
 };
 
+class Shader
+{
+public:
+    Shader(const char* vertexPath, const char* fragmentPath)
+    {
+        //Init(vertexPath, fragmentPath);
+    }
+
+    ~Shader()
+    {
+        glDeleteProgram(ID);
+    }
+
+    void Use() const
+    {
+        glUseProgram(ID);
+    }
+
+    unsigned int GetID() const { return ID; }
+
+    // MVP
+    unsigned int loc_model_matrix;
+    unsigned int loc_view_matrix;
+    unsigned int loc_projection_matrix;
+
+    
+private:
+    unsigned int ID;
+};
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);

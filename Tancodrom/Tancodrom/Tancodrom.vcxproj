@@ -74,6 +74,10 @@
     <IncludePath>C:\Users\Celia\Documents\PATH\stb-master;C:\Users\Celia\Documents\PATH\glfw-3.3.4.bin.WIN32\include\GLFW;C:\Users\Celia\Documents\PATH\glm-stable\glm;C:\Users\Celia\Documents\PATH\glew-2.1.0\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Celia\Documents\PATH\glfw-3.3.4.bin.WIN32\lib-vc2019;C:\Users\Celia\Documents\PATH\glew-2.1.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Users\Casi\Downloads\g3d\stb-master;C:\Users\Casi\Downloads\g3d\glm-stable\glm;C:\Users\Casi\Downloads\g3d\glew-2.1.0\include;C:\Users\Casi\Downloads\g3d\glfw-3.3.4.bin.WIN32\include\GLFW;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Casi\Downloads\g3d\glew-2.1.0\lib\Release\Win32;C:\Users\Casi\Downloads\g3d\glfw-3.3.4.bin.WIN32\lib-vc2019;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
