@@ -233,7 +233,7 @@ class Shader
 public:
     Shader(const char* vertexPath, const char* fragmentPath)
     {
-        //Init(vertexPath, fragmentPath);
+        Init(vertexPath, fragmentPath);
     }
 
     ~Shader()
@@ -328,6 +328,26 @@ private:
         // 3. delete the shaders as they're linked into our program now and no longer necessery
         glDeleteShader(vertex);
         glDeleteShader(fragment);
+    }
+
+    void CheckCompileErrors(unsigned int shaderStencilTesting, std::string type)
+    {
+        GLint success;
+        GLchar infoLog[1024];
+        if (type != "PROGRAM") {
+            glGetShaderiv(shaderStencilTesting, GL_COMPILE_STATUS, &success);
+            if (!success) {
+                glGetShaderInfoLog(shaderStencilTesting, 1024, NULL, infoLog);
+                std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+            }
+        }
+        else {
+            glGetProgramiv(shaderStencilTesting, GL_LINK_STATUS, &success);
+            if (!success) {
+                glGetProgramInfoLog(shaderStencilTesting, 1024, NULL, infoLog);
+                std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+            }
+        }
     }
     unsigned int ID;
 };
