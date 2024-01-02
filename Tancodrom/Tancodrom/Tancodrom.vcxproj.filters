@@ -23,5 +23,6 @@
     <None Include="ShadowMapping.fs" />
     <None Include="ShadowMapping.vs" />
     <None Include="ShadowMappingDepth.vs" />
+    <None Include="ShadowMappingDepth.fs" />
   </ItemGroup>
 </Project>
