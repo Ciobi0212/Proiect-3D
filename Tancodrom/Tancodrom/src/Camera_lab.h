@@ -73,6 +73,7 @@ public:
 
 	void screen(int width, int height);
 
+
 	const glm::vec2 screenSize() const { return _screenSize; }
 	const glm::vec2 renderSize() const { return _renderSize; }
 

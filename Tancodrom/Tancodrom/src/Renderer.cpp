@@ -19,12 +19,27 @@ void Renderer::initTanksModel() {
 }
 
 void Renderer::initTank2Model() {
-	tank2Model = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(3.5, 0, 15)), glm::vec3(0.5f));
+	tank2Model = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(20, 0, 30)), glm::vec3(0.5f));
 }
 
 void Renderer::initTank3Model() {
-	tank3Model = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0, -0.5, 10)), glm::vec3(0.5f));
+	tank3Model = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(3, -0.5, 10)), glm::vec3(0.5f));
 	tank3Model = glm::rotate(tank3Model, glm::radians(-90.0f), glm::vec3(1, 0, 0));
+}
+
+void Renderer::initTank4Model()
+{
+	tank4Model = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 30)), glm::vec3(0.5f));
+}
+
+void Renderer::initTank5Model()
+{
+	tank5Model = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(10.0, 0, 30)), glm::vec3(0.5f));
+}
+
+void Renderer::initTank6Model()
+{
+	tank6Model = glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(-10, 0, 30)), glm::vec3(0.5f));
 }
 
 
@@ -46,12 +61,14 @@ Renderer::Renderer(int width, int height) {
 	initTanksModel();
 	initTank2Model();
 	initTank3Model();
+	initTank4Model();
+	initTank5Model();
+	initTank6Model();
 	// Initialize the timer.
 	_timer = glfwGetTime();
 	// Initialize random generator;
 	Random::seed();
 	// Setup projection matrix.
-	//_camera.screen(width, height);
 	pCamera = new Camera(width, height, glm::vec3(0.0, 1.0, 3.0));
 	glm::mat4 projection = pCamera->GetProjectionMatrix();
 	glm::mat4 view = pCamera->GetViewMatrix();
@@ -66,13 +83,6 @@ Renderer::Renderer(int width, int height) {
 	_sceneFramebuffer = std::make_shared<Framebuffer>(renderWidth, renderHeight, GL_RGBA, GL_FLOAT, GL_RGBA16F, GL_LINEAR, GL_CLAMP_TO_EDGE);
 	_toneMappingFramebuffer = std::make_shared<Framebuffer>(renderWidth, renderHeight, GL_RGBA, GL_UNSIGNED_BYTE, GL_RGBA, GL_LINEAR, GL_CLAMP_TO_EDGE);
 	_fxaaFramebuffer = std::make_shared<Framebuffer>(renderWidth, renderHeight, GL_RGBA, GL_UNSIGNED_BYTE, GL_RGBA, GL_LINEAR, GL_CLAMP_TO_EDGE);
-
-	/*_gbuffer = std::make_shared<Gbuffer>(800, 600);
-	_ssaoFramebuffer = std::make_shared<Framebuffer>(400, 300, GL_RED, GL_UNSIGNED_BYTE, GL_RED, GL_LINEAR, GL_CLAMP_TO_EDGE);
-	_ssaoBlurFramebuffer = std::make_shared<Framebuffer>(800, 600, GL_RED, GL_UNSIGNED_BYTE, GL_RED, GL_LINEAR, GL_CLAMP_TO_EDGE);
-	_sceneFramebuffer = std::make_shared<Framebuffer>(800, 600, GL_RGBA, GL_FLOAT, GL_RGBA16F, GL_LINEAR, GL_CLAMP_TO_EDGE);
-	_toneMappingFramebuffer = std::make_shared<Framebuffer>(800, 600, GL_RGBA, GL_UNSIGNED_BYTE, GL_RGBA, GL_LINEAR, GL_CLAMP_TO_EDGE);
-	_fxaaFramebuffer = std::make_shared<Framebuffer>(800, 600, GL_RGBA, GL_UNSIGNED_BYTE, GL_RGBA, GL_LINEAR, GL_CLAMP_TO_EDGE);*/
 
 	// Create directional light.
 	_directionalLights.emplace_back(glm::vec3(0.0f), glm::vec3(2.0f), glm::ortho(-0.75f, 0.75f, -0.75f, 0.75f, 2.0f, 6.0f));
@@ -107,6 +117,12 @@ Renderer::Renderer(int width, int height) {
 	_tank2.init("Abrams_BF3", { "M1A2", "M1A2_N 2","M1A2_S" }, 1); //Abrams_BF3
 
 	_tank3.init("apc", { "us_apc_chass_asian", "us_apc_chass_asian_N 2","us_apc_chass_asian_S" }, 1); //apc
+	
+	_tank4.init("Abrams_BF3", { "M1A2", "M1A2_N 2","M1A2_S" }, 1); 
+	
+	_tank5.init("Abrams_BF3", { "M1A2", "M1A2_N 2","M1A2_S" }, 1);
+
+	_tank6.init("Abrams_BF3", { "M1A2", "M1A2_N 2","M1A2_S" }, 1);
 
 	_tanks.init("", { "8430f8ee", "8430f8ee_N 2", "8430f8ee_S" }, 1); // t-90a(Elements_of_war)
 
@@ -139,6 +155,9 @@ Renderer::Renderer(int width, int height) {
 	_helicopter1.update(_helicopter1Model);
 	_tank2.update(tank2Model);
 	_tank3.update(tank3Model);
+	_tank4.update(tank4Model);
+	_tank5.update(tank5Model);
+	_tank6.update(tank6Model);
 	_tanks.update(tanksModel);
 	_plane.update(planeModel);
 
@@ -169,11 +188,12 @@ void Renderer::draw() {
 		dirLight.bind();
 
 		// Draw objects.
-		// _suzanne.drawDepth(dirLight.mvp());
-		// _dragon.drawDepth(dirLight.mvp());
 		_helicopter1.drawDepth(dirLight.mvp());
 		_tank2.drawDepth(dirLight.mvp());
 		_tank3.drawDepth(dirLight.mvp());
+		_tank4.drawDepth(dirLight.mvp());
+		_tank5.drawDepth(dirLight.mvp());
+		_tank6.drawDepth(dirLight.mvp());
 		_tanks.drawDepth(dirLight.mvp());
 		
 
@@ -181,9 +201,6 @@ void Renderer::draw() {
 
 	}
 
-	// ----------------------
-
-	// --- Scene pass -------
 	// Bind the full scene framebuffer.
 	_gbuffer->bind();
 	// Set screen viewport
@@ -221,6 +238,38 @@ void Renderer::draw() {
 	_tank2.draw(pCamera->GetViewMatrix(), pCamera->GetProjectionMatrix());
 	tank2Model = glm::translate(tank2Model, glm::vec3(14, 0, 0));
 	_tank2.update(tank2Model);
+
+	//tank4
+	tank4Model = glm::translate(tank4Model, glm::vec3(-7, 0, 15));
+	_tank4.update(tank4Model);
+	_tank4.draw(pCamera->GetViewMatrix(), pCamera->GetProjectionMatrix());
+	tank4Model = glm::translate(tank4Model, glm::vec3(-7, 0, -15));
+	_tank4.update(tank4Model);
+	_tank4.draw(pCamera->GetViewMatrix(), pCamera->GetProjectionMatrix());
+	tank4Model = glm::translate(tank4Model, glm::vec3(14, 0, 0));
+	_tank4.update(tank4Model);
+	
+	//tank5
+	tank5Model = glm::translate(tank5Model, glm::vec3(-7, 0, 15));
+	_tank5.update(tank5Model);
+	_tank5.draw(pCamera->GetViewMatrix(), pCamera->GetProjectionMatrix());
+	tank5Model = glm::translate(tank5Model, glm::vec3(-7, 0, -15));
+	_tank5.update(tank5Model);
+	_tank5.draw(pCamera->GetViewMatrix(), pCamera->GetProjectionMatrix());
+	tank5Model = glm::translate(tank5Model, glm::vec3(14, 0, 0));
+	_tank5.update(tank5Model);
+
+	//tank6
+	tank6Model = glm::translate(tank6Model, glm::vec3(-7, 0, 15));
+	_tank6.update(tank6Model);
+	_tank6.draw(pCamera->GetViewMatrix(), pCamera->GetProjectionMatrix());
+	tank6Model = glm::translate(tank6Model, glm::vec3(-7, 0, -15));
+	_tank6.update(tank6Model);
+	_tank6.draw(pCamera->GetViewMatrix(), pCamera->GetProjectionMatrix());
+	tank6Model = glm::translate(tank6Model, glm::vec3(14, 0, 0));
+	_tank6.update(tank6Model);
+	
+	
 
 	_helicopter1.draw(pCamera->GetViewMatrix(), pCamera->GetProjectionMatrix());
 
@@ -308,8 +357,6 @@ void Renderer::draw() {
 
 void Renderer::physics(double elapsedTime) {
 
-	//_camera.update(elapsedTime);
-
 	// Update lights.
 	_directionalLights[0].update(glm::vec3(2.0f, 1.5f, 2.0f), pCamera->GetViewMatrix());
 
@@ -318,13 +365,8 @@ void Renderer::physics(double elapsedTime) {
 		glm::vec4 newPosition = glm::rotate(glm::mat4(1.0f), (float)elapsedTime, glm::vec3(0.0f, 1.0f, 0.0f)) * glm::vec4(pointLight.local(), 1.0f);
 		pointLight.update(glm::vec3(newPosition), pCamera->GetViewMatrix());
 	}
-	//findme: Simulate accelerated day cycle by moving sunlight as time passes
 	// Update objects.
 
-	//const glm::mat4 suzanneModel = glm::scale(glm::rotate(glm::translate(glm::mat4(1.0f), glm::vec3(0.2,0.0,0.0)),float(_timer),glm::vec3(0.0f,1.0f,0.0f)),glm::vec3(0.25f));
-	// const glm::mat4 dragonModel = glm::translate(glm::mat4(1.0f), glm::vec3(0.6, 0.6, 0.6)); //findme: change vec3 to set the position
-	//_suzanne.update(suzanneModel);
-	// _dragon.update(dragonModel);
 	if (helicoptermovez != 0) {
 		if (helicopterspeedx<50 && helicopterspeedx>-50) {
 			helicopterspeedx += 0.3f * helicoptermovex;
@@ -357,6 +399,9 @@ void Renderer::clean() const {
 	_tanks.clean();
 	_tank2.clean();
 	_tank3.clean();
+	_tank4.clean();
+	_tank5.clean();
+	_tank6.clean();
 	_helicopter1.clean();
 	_plane.clean();
 	_skybox.clean();
@@ -469,9 +514,6 @@ void Renderer::buttonPressed(int button, int action, double x, double y) {
 void Renderer::mousePosition(double x, double y, bool leftPress, bool rightPress) {
 
 	pCamera->MouseControl((float)x, (float)y, leftPress);
-	/*if (leftPress){
-		_camera.mouse(MouseMode::Move, float(x), float(y));
-	}*/
 }
 
 

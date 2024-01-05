@@ -55,6 +55,12 @@ public:
 
 	void initTank3Model();
 
+	void initTank4Model();
+	
+	void initTank5Model();
+
+	void initTank6Model();
+
 	void initHelicopter1();
 
 	
@@ -82,11 +88,17 @@ private:
 	int reverse = 1;
 	Object _tank2;
 	Object _tank3;
+	Object _tank4;
+	Object _tank5;
+	Object _tank6;
 	Object _heli1;
 
 	glm::mat4 tanksModel = glm::mat4(1.0f);
 	glm::mat4 tank2Model = glm::mat4(1.0f);
 	glm::mat4 tank3Model = glm::mat4(1.0f);
+	glm::mat4 tank4Model = glm::mat4(1.0f);
+	glm::mat4 tank5Model = glm::mat4(1.0f);
+	glm::mat4 tank6Model = glm::mat4(1.0f);
 	glm::mat4 _helicopter1Model = glm::mat4(1.0f);
 
 

@@ -143,7 +143,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\AmbientQuad.cpp" />
-    <ClCompile Include="src\camera\Camera.cpp" />
     <ClCompile Include="src\camera\Keyboard.cpp" />
     <ClCompile Include="src\Camera_lab.cpp" />
     <ClCompile Include="src\Framebuffer.cpp" />
@@ -164,7 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AmbientQuad.h" />
-    <ClInclude Include="src\camera\Camera.h" />
     <ClInclude Include="src\camera\Keyboard.h" />
     <ClInclude Include="src\Camera_lab.h" />
     <ClInclude Include="src\Framebuffer.h" />

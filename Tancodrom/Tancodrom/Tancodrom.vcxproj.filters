@@ -49,9 +49,6 @@
     <ClCompile Include="src\lights\DirectionalLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\camera\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\AmbientQuad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -118,9 +115,6 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="src\lights\DirectionalLight.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\camera\Camera.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="src\AmbientQuad.h">
