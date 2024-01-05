@@ -101,7 +101,7 @@ int main () {
 	glfwGetFramebufferSize(window, &width, &height);
 	renderer.resize(width, height);
 
-	
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	
 	// Start the display/interaction loop.
 	while (!glfwWindowShouldClose(window)) {
